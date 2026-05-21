@@ -1,0 +1,118 @@
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { loginStaff } from '@/services/authService'
+import { useAuthStore } from '@/store/authStore'
+import { loginSchema, LoginFormData } from '@/lib/validators'
+import { Eye, EyeOff } from 'lucide-react'
+
+const ROLE_REDIRECT = {
+    admin: '/admin/dashboard',
+    kitchen: '/kitchen/dashboard',
+    driver: '/driver/dashboard',
+}
+
+export default function LoginPage() {
+    const router = useRouter()
+    const { setAuth } = useAuthStore()
+    const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema)
+    })
+
+    const onSubmit = async (data: LoginFormData) => {
+        setLoading(true)
+        try {
+            const response = await loginStaff(data)
+            const { staff } = response.data
+            setAuth(staff)
+            toast.success(`Welcome, ${staff.name}!`)
+            const redirect = ROLE_REDIRECT[staff.role as keyof typeof ROLE_REDIRECT] || '/login'
+            router.push(redirect)
+        } catch (error: any) {
+            toast.error(error.response?.data?.message || 'Login failed')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <div className="min-h-screen bg-[#0F1226] flex flex-col">
+
+            {/* TOP SECTION */}
+            <div className="px-6 pt-10 pb-16 text-center text-white relative">
+                <h1 className="text-2xl font-bold mt-10">Staff Portal</h1>
+                <p className="text-gray-300 text-sm mt-2">
+                    Login to Tiffinvala Admin Panel
+                </p>
+            </div>
+
+            {/* FORM CARD */}
+            <div className="bg-white rounded-t-3xl px-6 py-8 flex-1">
+                <div className="max-w-md mx-auto">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+                        {/* Email */}
+                        <div>
+                            <label className="text-xs text-gray-500 font-medium">EMAIL</label>
+                            <input
+                                {...register('email')}
+                                type="email"
+                                placeholder="staff@tiffinvala.com"
+                                suppressHydrationWarning
+                                className="w-full mt-1 bg-gray-100 rounded-xl px-4 py-4 text-sm outline-none"
+                            />
+                            {errors.email && (
+                                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                            )}
+                        </div>
+
+                        {/* Password */}
+                        <div>
+                            <label className="text-xs text-gray-500 font-medium">PASSWORD</label>
+                            <div className="relative mt-1">
+                                <input
+                                    {...register('password')}
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Enter your password"
+                                    suppressHydrationWarning
+                                    className="w-full bg-gray-100 rounded-xl px-4 py-4 text-sm outline-none pr-12"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                            {errors.password && (
+                                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                            )}
+                        </div>
+
+                        {/* Submit */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="block mx-auto mt-14 w-auto px-20 py-3 md:px-30 md:py-4 bg-[#F97316] hover:bg-[#F97316]/80 text-white rounded-xl font-semibold tracking-wider text-sm md:text-base disabled:opacity-60"
+                        >
+                            {loading ? 'LOGGING IN...' : 'LOGIN'}
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
+}
