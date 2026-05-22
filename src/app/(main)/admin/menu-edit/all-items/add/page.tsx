@@ -256,7 +256,7 @@ export default function AddProductPage() {
 
         const payload = {
             name: form.name,
-            description: form.description,
+            description: form.description.trim() || ' ',
             category: form.category,
             food_class: form.food_class,
             product_type: form.product_type,
@@ -546,7 +546,7 @@ export default function AddProductPage() {
                             className="flex gap-2 mb-2 items-center"
                         >
 
-                            <input
+                            {/* <input
                                 value={v.size}
                                 onChange={e =>
                                     updateVariant(
@@ -557,7 +557,35 @@ export default function AddProductPage() {
                                 }
                                 placeholder="Size"
                                 className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none"
-                            />
+                            /> */}
+
+                            <select
+                                value={v.size}
+                                onChange={e =>
+                                    updateVariant(
+                                        i,
+                                        'size',
+                                        e.target.value
+                                    )
+                                }
+                                className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none"
+                            >
+                                <option value="">
+                                    Select Size
+                                </option>
+
+                                <option value="8oz">
+                                    8oz
+                                </option>
+
+                                <option value="16oz">
+                                    16oz
+                                </option>
+
+                                <option value="32oz">
+                                    32oz
+                                </option>
+                            </select>
 
                             <input
                                 type="number"

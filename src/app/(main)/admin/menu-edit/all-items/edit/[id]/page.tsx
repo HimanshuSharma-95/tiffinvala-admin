@@ -576,7 +576,7 @@ export default function EditItemPage() {
         try {
             await updateProduct(id, {
                 name: form.name,
-                description: form.description,
+                description: form.description.trim() || ' ',
                 category: form.category,
                 food_class: form.food_class,
                 product_type: form.product_type,

@@ -136,7 +136,7 @@ function ProductCard({ product, onEdit }: { product: Product; onEdit: () => void
         bg-gray-100
         border
         border-gray-200
-        rounded-xl
+        rounded-2xl
         overflow-hidden
         flex
         flex-col
@@ -146,7 +146,7 @@ function ProductCard({ product, onEdit }: { product: Product; onEdit: () => void
         >
 
             {/* Image */}
-            <div className="w-full bg-gray-200 overflow-hidden relative" style={{ aspectRatio: '4/3' }}>
+            {/* <div className="w-full bg-gray-200 overflow-hidden relative" style={{ aspectRatio: '4/3' }}>
                 <img
                     src={product.image?.trim() || '/defaultfood.png'}
                     alt={product.name}
@@ -155,9 +155,22 @@ function ProductCard({ product, onEdit }: { product: Product; onEdit: () => void
                         (e.target as HTMLImageElement).src = '/images/defFoodImage.png'
                     }}
                 />
+            </div> */}
 
-                {/* Availability */}
-                {/* <div className={`absolute top-1 left-1 w-2 h-2 rounded-full ${product.isAvailable ? 'bg-green-400' : 'bg-red-400'}`} /> */}
+            {/* Image */}
+            <div
+                className="w-full bg-gray-200 p-2 flex items-center justify-center"
+                style={{ aspectRatio: '4/3' }}
+            >
+                <img
+                    src={product.image?.trim() || '/defaultfood.png'}
+                    alt={product.name}
+                    className="w-[92%] h-[92%] object-cover rounded-2xl"
+                    onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                            '/images/defFoodImage.png'
+                    }}
+                />
             </div>
 
             {/* Info */}

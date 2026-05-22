@@ -22,7 +22,7 @@ interface RuleForm {
     category: string[]
     quantity: number
     label: string
-    isSelectionRequired: boolean
+    allowCustomSelection: boolean
 }
 
 export default function AddComboPage() {
@@ -48,12 +48,13 @@ export default function AddComboPage() {
         fullyVeg: false,
     })
 
+
     const [rules, setRules] = useState<RuleForm[]>([
         {
             category: [],
             quantity: 1,
             label: '',
-            isSelectionRequired: true
+            allowCustomSelection: true
         }
     ])
 
@@ -82,7 +83,7 @@ export default function AddComboPage() {
                 category: [],
                 quantity: 1,
                 label: '',
-                isSelectionRequired: true
+                allowCustomSelection: true
             }
         ])
     }
@@ -162,8 +163,8 @@ export default function AddComboPage() {
                 category: rule.category,
                 quantity: rule.quantity,
                 label: rule.label,
-                isSelectionRequired:
-                    rule.isSelectionRequired
+                allowCustomSelection:
+                    rule.allowCustomSelection
             })),
             options: {
                 fullyVeg: form.fullyVeg
@@ -275,7 +276,7 @@ export default function AddComboPage() {
                 </div>
 
                 {/* PRICE + SIZE */}
-                <div className="flex gap-3">
+                {/* <div className="flex gap-3">
 
                     <div className="flex-1">
                         <label className="text-xs text-gray-500 font-medium">
@@ -316,6 +317,58 @@ export default function AddComboPage() {
                             <option value="16oz">
                                 16oz
                             </option>
+                            <option value="32oz">
+                                32oz
+                            </option>
+                        </select>
+                    </div>
+
+                </div> */}
+
+                {/* PRICE + SIZE */}
+                <div className="flex gap-3">
+
+                    <div className="flex-1">
+                        <label className="text-xs text-gray-500 font-medium">
+                            PRICE *
+                        </label>
+
+                        <input
+                            type="number"
+                            value={form.price}
+                            onChange={e =>
+                                setForm(p => ({
+                                    ...p,
+                                    price: e.target.value
+                                }))
+                            }
+                            className="w-full mt-1 bg-gray-100 rounded-xl px-4 py-3 text-sm outline-none"
+                        />
+                    </div>
+
+                    <div className="flex-1">
+                        <label className="text-xs text-gray-500 font-medium">
+                            SIZE
+                        </label>
+
+                        <select
+                            value={form.size}
+                            onChange={e =>
+                                setForm(p => ({
+                                    ...p,
+                                    size: e.target.value
+                                }))
+                            }
+                            className="w-full mt-1 bg-gray-100 rounded-xl px-4 py-3 text-sm outline-none"
+                        >
+                            <option value="8oz">
+                                8oz
+                            </option>
+
+                            <option value="16oz">
+                                16oz
+                            </option>
+
                             <option value="32oz">
                                 32oz
                             </option>
@@ -430,6 +483,39 @@ export default function AddComboPage() {
                                         </button>
 
                                     ))}
+
+                                </div>
+
+                                <div className="flex items-center gap-2">
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            updateRule(
+                                                index,
+                                                'allowCustomSelection',
+                                                !rule.allowCustomSelection
+                                            )
+                                        }
+                                        className={`w-10 h-5 rounded-full transition-colors ${rule.allowCustomSelection
+                                                ? 'bg-[#F97316]'
+                                                : 'bg-gray-300'
+                                            }`}
+                                    >
+
+                                        <div
+                                            className={`w-4 h-4 bg-white rounded-full shadow-sm transition-transform mx-0.5
+            ${rule.allowCustomSelection
+                                                    ? 'translate-x-5'
+                                                    : 'translate-x-0'
+                                                }`}
+                                        />
+
+                                    </button>
+
+                                    <span className="text-xs text-gray-500">
+                                        Custom selection allowed
+                                    </span>
 
                                 </div>
 
