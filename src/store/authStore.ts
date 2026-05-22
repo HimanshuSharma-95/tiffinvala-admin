@@ -26,9 +26,33 @@ export const useAuthStore = create<AuthStore>()(
                 document.cookie = `user-role=${staff.role}; expires=${expires}; path=/; SameSite=Strict`
             },
 
+            // logout: () => {
+            //     set({ staff: null, role: null })
+            //     document.cookie = `user-role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+            // },
+
             logout: () => {
                 set({ staff: null, role: null })
-                document.cookie = `user-role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+
+                const expired =
+                    'expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict'
+
+                // Clear cookies
+                document.cookie = `user-role=; ${expired}`
+                document.cookie = `accesstoken=; ${expired}`
+                document.cookie = `refreshtoken=; ${expired}`
+
+                // Optional secure variants
+                document.cookie = `user-role=; ${expired}; Secure`
+                document.cookie = `accesstoken=; ${expired}; Secure`
+                document.cookie = `refreshtoken=; ${expired}; Secure`
+
+                // Clear storage if used
+                localStorage.removeItem('accesstoken')
+                localStorage.removeItem('refreshtoken')
+
+                sessionStorage.removeItem('accesstoken')
+                sessionStorage.removeItem('refreshtoken')
             },
 
             isLoggedIn: () => !!get().staff,
