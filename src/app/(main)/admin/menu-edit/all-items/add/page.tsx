@@ -575,6 +575,9 @@ export default function AddProductPage() {
                                 </option>
 
                                 <option value="8oz">
+                                    default
+                                </option>
+                                <option value="8oz">
                                     8oz
                                 </option>
 

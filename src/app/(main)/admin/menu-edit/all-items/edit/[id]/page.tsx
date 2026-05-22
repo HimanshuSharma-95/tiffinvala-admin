@@ -1,373 +1,3 @@
-// 'use client'
-
-// import { useState, useEffect, useRef } from 'react'
-// import { useRouter, useParams } from 'next/navigation'
-// import { toast } from 'sonner'
-// import { ArrowLeft, Plus, X, ImageIcon } from 'lucide-react'
-// import { getSingleProduct, updateProduct, updateProductImage, getCategories } from '@/services/menuService'
-// import { Product } from '@/types/menu'
-
-// export default function EditItemPage() {
-//     const router = useRouter()
-//     const params = useParams()
-//     const id = params.id as string
-
-//     const [product, setProduct] = useState<Product | null>(null)
-//     const [categories, setCategories] = useState<string[]>([])
-//     const [loading, setLoading] = useState(true)
-//     const [saving, setSaving] = useState(false)
-//     const [uploadingImage, setUploadingImage] = useState(false)
-//     const [newImage, setNewImage] = useState<File | null>(null)
-//     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-//     const hasFetched = useRef(false)
-//     const [initialForm, setInitialForm] = useState<any>(null)
-
-//     const [form, setForm] = useState({
-//         name: '',
-//         description: '',
-//         category: '',
-//         food_class: '',
-//         product_type: '',
-//         variants: [{ size: '', price: '' }],
-//     })
-
-//     useEffect(() => {
-//         if (hasFetched.current) return
-//         hasFetched.current = true
-//         fetchData()
-//     }, [])
-
-//     const fetchData = async () => {
-//         setLoading(true)
-//         try {
-//             const [prodRes, catRes] = await Promise.all([
-//                 getSingleProduct(id),
-//                 getCategories(),
-//             ])
-
-//             const p: Product = prodRes.data
-//             setProduct(p)
-//             setForm({
-//                 name: p.name,
-//                 description: p.description,
-//                 category: p.category,
-//                 food_class: p.food_class,
-//                 product_type: p.product_type,
-//                 variants: p.variants.map(v => ({
-//                     size: v.size,
-//                     price: String(v.price),
-//                 })),
-//             })
-
-//             setInitialForm({
-//                 name: p.name,
-//                 description: p.description,
-//                 category: p.category,
-//                 food_class: p.food_class,
-//                 product_type: p.product_type,
-//                 variants: p.variants.map(v => ({
-//                     size: v.size,
-//                     price: String(v.price),
-//                 })),
-//             })
-
-//             setCategories(catRes.data.categories)
-//         } catch {
-//             toast.error('Failed to load product')
-//         } finally {
-//             setLoading(false)
-//         }
-//     }
-
-//     const isFormChanged = () => {
-//         if (!initialForm) return false
-
-//         return JSON.stringify(form) !== JSON.stringify(initialForm)
-//     }
-
-//     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//         const file = e.target.files?.[0]
-//         if (!file) return
-//         setNewImage(file)
-//         setPreviewUrl(URL.createObjectURL(file))
-//     }
-
-//     const handleImageUpload = async () => {
-//         if (!newImage) return
-//         setUploadingImage(true)
-//         try {
-//             const res = await updateProductImage(id, newImage)
-//             setProduct(prev => prev ? { ...prev, image: res.data.image } : prev)
-//             setNewImage(null)
-//             setPreviewUrl(null)
-//             toast.success('Image updated!')
-//         } catch (error: any) {
-//             toast.error(error.response?.data?.message || 'Failed to upload image')
-//         } finally {
-//             setUploadingImage(false)
-//         }
-//     }
-
-//     const addVariant = () => {
-//         setForm(p => ({ ...p, variants: [...p.variants, { size: '', price: '' }] }))
-//     }
-
-//     const removeVariant = (i: number) => {
-//         if (form.variants.length === 1) return
-//         setForm(p => ({ ...p, variants: p.variants.filter((_, idx) => idx !== i) }))
-//     }
-
-//     const updateVariant = (i: number, field: 'size' | 'price', value: string) => {
-//         setForm(p => ({
-//             ...p,
-//             variants: p.variants.map((v, idx) => idx === i ? { ...v, [field]: value } : v)
-//         }))
-//     }
-
-//     const handleCategorySelect = (cat: string) => {
-//         setForm(p => ({
-//             ...p,
-//             category: cat,
-//             food_class: cat,
-//             product_type: cat,
-//         }))
-//     }
-
-//     const handleSave = async (e: React.FormEvent) => {
-//         e.preventDefault()
-//         if (!form.name || !form.category) {
-//             toast.error('Name and category are required')
-//             return
-//         }
-//         if (form.variants.some(v => !v.size || !v.price)) {
-//             toast.error('Fill all variant fields')
-//             return
-//         }
-
-//         // build payload as plain object — axios sends as JSON automatically
-//         const payload = {
-//             name: form.name,
-//             description: form.description,
-//             category: form.category,
-//             food_class: form.food_class,
-//             product_type: form.product_type,
-//             variants: form.variants.map(v => ({
-//                 size: v.size,
-//                 price: Number(v.price),
-//             })),
-//         }
-
-//         setSaving(true)
-//         try {
-//             await updateProduct(id, payload)
-//             toast.success('Product updated!')
-//             // router.back()
-//         } catch (error: any) {
-//             toast.error(error.response?.data?.message || 'Failed to update')
-//         } finally {
-//             setSaving(false)
-//         }
-//     }
-
-//     if (loading) return (
-//         <div className="min-h-screen bg-white px-4 py-6 space-y-4">
-//             <div className="h-8 w-32 bg-gray-100 rounded-full animate-pulse" />
-//             <div className="h-44 bg-gray-100 rounded-2xl animate-pulse" />
-//             {[1, 2, 3].map(i => (
-//                 <div key={i} className="h-14 bg-gray-100 rounded-xl animate-pulse" />
-//             ))}
-//         </div>
-//     )
-
-//     return (
-//         <div className="min-h-screen bg-white pb-10">
-
-//             {/* Header */}
-//             <div className="flex items-center gap-3 px-4 py-4">
-//                 <button
-//                     onClick={() => router.back()}
-//                     className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center"
-//                 >
-//                     <ArrowLeft size={16} />
-//                 </button>
-//                 <h1 className="text-lg font-bold text-[#1E2A3A]">Edit Item</h1>
-//             </div>
-
-//             <div className="max-w-md mx-auto px-4 space-y-5">
-
-//                 {/* Image Section */}
-//                 <div className="space-y-2">
-//                     <label className="text-xs text-gray-500 font-medium">IMAGE</label>
-
-//                     <div className="w-full h-44 rounded-2xl overflow-hidden bg-gray-100">
-//                         <img
-//                             src={previewUrl || product?.image?.trim() || '/images/defFoodImage.png'}
-//                             alt={form.name}
-//                             className="w-full h-full object-cover"
-//                             onError={(e) => {
-//                                 (e.target as HTMLImageElement).src = '/images/defFoodImage.png'
-//                             }}
-//                         />
-//                     </div>
-
-//                     <div className="flex gap-2">
-//                         <label className="flex-1 flex items-center justify-center gap-2 bg-gray-100 rounded-xl py-2.5 text-sm text-gray-500 cursor-pointer hover:bg-gray-200 transition-colors">
-//                             <ImageIcon size={15} />
-//                             {newImage ? newImage.name.slice(0, 20) + '...' : 'Choose New Image'}
-//                             <input
-//                                 type="file"
-//                                 accept="image/*"
-//                                 onChange={handleImageChange}
-//                                 className="hidden"
-//                             />
-//                         </label>
-
-//                         {newImage && (
-//                             <button
-//                                 type="button"
-//                                 onClick={handleImageUpload}
-//                                 disabled={uploadingImage}
-//                                 className="px-4 bg-[#F97316] text-white rounded-xl text-sm font-semibold disabled:opacity-60"
-//                             >
-//                                 {uploadingImage ? 'Uploading...' : 'Upload'}
-//                             </button>
-//                         )}
-
-//                         {newImage && (
-//                             <button
-//                                 type="button"
-//                                 onClick={() => { setNewImage(null); setPreviewUrl(null) }}
-//                                 className="w-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 hover:bg-gray-200"
-//                             >
-//                                 <X size={15} />
-//                             </button>
-//                         )}
-//                     </div>
-//                 </div>
-
-//                 <form onSubmit={handleSave} className="space-y-4">
-
-//                     {/* Name */}
-//                     <div>
-//                         <label className="text-xs text-gray-500 font-medium">NAME *</label>
-//                         <input
-//                             value={form.name}
-//                             onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-//                             placeholder="Dal Makhani"
-//                             className="w-full mt-1 bg-gray-100 rounded-xl px-4 py-3 text-sm outline-none"
-//                         />
-//                     </div>
-
-//                     {/* Description */}
-//                     <div>
-//                         <label className="text-xs text-gray-500 font-medium">DESCRIPTION</label>
-//                         <textarea
-//                             value={form.description}
-//                             onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
-//                             rows={3}
-//                             placeholder="Describe the item..."
-//                             className="w-full mt-1 bg-gray-100 rounded-xl px-4 py-3 text-sm outline-none resize-none"
-//                         />
-//                     </div>
-
-//                     {/* Category */}
-//                     <div>
-//                         <label className="text-xs text-gray-500 font-medium">CATEGORY *</label>
-//                         <div className="flex flex-wrap gap-2 mt-2">
-//                             {categories.map(cat => (
-//                                 <button
-//                                     key={cat}
-//                                     type="button"
-//                                     onClick={() => handleCategorySelect(cat)}
-//                                     className={`px-3 py-1.5 rounded-full text-xs font-medium border capitalize transition-colors
-//                                         ${form.category === cat
-//                                             ? 'bg-[#F97316] text-white border-[#F97316]'
-//                                             : 'bg-white text-gray-500 border-gray-200'}`}
-//                                 >
-//                                     {cat.replace(/_/g, ' ')}
-//                                 </button>
-//                             ))}
-//                         </div>
-//                     </div>
-
-//                     {/* Variants */}
-//                     <div>
-//                         <div className="flex items-center justify-between mb-2">
-//                             <label className="text-xs text-gray-500 font-medium">VARIANTS *</label>
-//                             <button
-//                                 type="button"
-//                                 onClick={addVariant}
-//                                 className="text-xs text-[#F97316] font-semibold flex items-center gap-1"
-//                             >
-//                                 <Plus size={12} /> Add
-//                             </button>
-//                         </div>
-//                         <div className="space-y-2">
-//                             {form.variants.map((v, i) => (
-//                                 <div key={i} className="flex gap-2 items-center">
-//                                     <input
-//                                         value={v.size}
-//                                         onChange={e => updateVariant(i, 'size', e.target.value)}
-//                                         placeholder="Size (e.g. 16oz)"
-//                                         className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none"
-//                                     />
-//                                     <input
-//                                         type="number"
-//                                         value={v.price}
-//                                         onChange={e => updateVariant(i, 'price', e.target.value)}
-//                                         placeholder="Price"
-//                                         className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none"
-//                                     />
-//                                     {form.variants.length > 1 && (
-//                                         <button
-//                                             type="button"
-//                                             onClick={() => removeVariant(i)}
-//                                             className="text-red-400 shrink-0"
-//                                         >
-//                                             <X size={16} />
-//                                         </button>
-//                                     )}
-//                                 </div>
-//                             ))}
-//                         </div>
-//                     </div>
-
-//                     {/* Live in areas */}
-//                     {product?.areas && product.areas.length > 0 && (
-//                         <div>
-//                             <label className="text-xs text-gray-500 font-medium">LIVE IN AREAS</label>
-//                             <div className="flex flex-wrap gap-2 mt-2">
-//                                 {product.areas.map(area => (
-//                                     <span
-//                                         key={area}
-//                                         className="text-xs bg-green-100 text-green-600 px-3 py-1 rounded-full font-medium capitalize"
-//                                     >
-//                                         {area.replace('_', ' ')}
-//                                     </span>
-//                                 ))}
-//                             </div>
-//                         </div>
-//                     )}
-
-//                     <button
-//                         type="submit"
-//                         disabled={saving || !isFormChanged()}
-//                         className={`w-full py-3 rounded-xl font-semibold transition
-//         ${saving || !isFormChanged()
-//                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-//                                 : 'bg-[#F97316] text-white hover:opacity-90'
-//                             }`}
-//                     >
-//                         {saving ? 'Saving...' : 'Save Changes'}
-//                     </button>
-//                 </form>
-//             </div>
-//         </div>
-//     )
-// }
-
-
-
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -760,9 +390,43 @@ export default function EditItemPage() {
                         <div className="space-y-2">
                             {form.variants.map((v, i) => (
                                 <div key={i} className="flex gap-2 items-center">
-                                    <input value={v.size} onChange={e => updateVariant(i, 'size', e.target.value)}
+
+                                    {/* <input value={v.size} onChange={e => updateVariant(i, 'size', e.target.value)}
                                         placeholder="Size (e.g. 16oz)"
-                                        className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none" />
+                                        className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none" /> */}
+
+                                    <select
+                                        value={v.size}
+                                        onChange={e =>
+                                            updateVariant(
+                                                i,
+                                                'size',
+                                                e.target.value
+                                            )
+                                        }
+                                        className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none"
+                                    >
+                                        <option value="">
+                                            Select Size
+                                        </option>
+
+                                        <option value="default">
+                                            default
+                                        </option>
+
+                                        <option value="8oz">
+                                            8oz
+                                        </option>
+
+                                        <option value="16oz">
+                                            16oz
+                                        </option>
+
+                                        <option value="32oz">
+                                            32oz
+                                        </option>
+                                    </select>
+
                                     <input type="number" value={v.price} onChange={e => updateVariant(i, 'price', e.target.value)}
                                         placeholder="Price"
                                         className="flex-1 bg-gray-100 rounded-xl px-3 py-3 text-sm outline-none" />

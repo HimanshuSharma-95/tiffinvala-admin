@@ -107,32 +107,32 @@ export default function RoutePage() {
 
             {/* HEADER */}
 
-            <div className="bg-white border-b border-gray-100 px-4 py-4 flex items-center justify-between">
+            <div className="bg-white border-b border-gray-100 px-3 sm:px-4 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
 
                 {/* LEFT */}
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
 
                     <button
                         onClick={() =>
                             router.back()
                         }
-                        className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0"
                     >
 
-                        <ArrowLeft size={18} />
+                        <ArrowLeft size={16} className="sm:w-4.5 sm:h-4.5" />
 
                     </button>
 
-                    <div>
+                    <div className="min-w-0">
 
-                        <h1 className="text-lg font-bold text-[#1E2A3A]">
+                        <h1 className="text-base sm:text-lg font-bold text-[#1E2A3A] truncate">
 
                             Delivery Routes
 
                         </h1>
 
-                        <p className="text-xs text-gray-400">
+                        <p className="text-[11px] sm:text-xs text-gray-400 truncate">
 
                             Manage delivery batches
 
@@ -144,17 +144,17 @@ export default function RoutePage() {
 
                 {/* RIGHT */}
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full lg:w-auto">
 
                     {/* RESET */}
 
                     <button
                         onClick={handleResetDrivers}
                         disabled={resetting}
-                        className="h-10 px-4 rounded-xl border border-red-200 bg-red-50 text-red-500 text-sm font-medium flex items-center gap-2 disabled:opacity-60"
+                        className="h-9 sm:h-10 px-3 sm:px-4 rounded-xl border border-red-200 bg-red-50 text-red-500 text-xs sm:text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-60 flex-1 lg:flex-none whitespace-nowrap"
                     >
 
-                        <RotateCcw size={15} />
+                        <RotateCcw size={14} className="sm:w-3.75 sm:h-3.75" />
 
                         {
                             resetting
@@ -173,7 +173,7 @@ export default function RoutePage() {
                                 e.target.value
                             )
                         }
-                        className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white outline-none"
+                        className="border border-gray-200 rounded-xl px-2 sm:px-3 h-9 sm:h-10 text-xs sm:text-sm bg-white outline-none flex-1 lg:flex-none min-w-0"
                     >
 
                         {
