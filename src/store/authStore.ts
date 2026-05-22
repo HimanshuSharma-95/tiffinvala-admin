@@ -31,28 +31,66 @@ export const useAuthStore = create<AuthStore>()(
             //     document.cookie = `user-role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
             // },
 
+            // logout: () => {
+            //     set({ staff: null, role: null })
+
+            //     const expired =
+            //         'expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict'
+
+            //     // Clear cookies
+            //     document.cookie = `user-role=; ${expired}`
+            //     document.cookie = `accesstoken=; ${expired}`
+            //     document.cookie = `refreshtoken=; ${expired}`
+
+            //     // Optional secure variants
+            //     document.cookie = `user-role=; ${expired}; Secure`
+            //     document.cookie = `accesstoken=; ${expired}; Secure`
+            //     document.cookie = `refreshtoken=; ${expired}; Secure`
+
+            //     // Clear storage if used
+            //     localStorage.removeItem('accesstoken')
+            //     localStorage.removeItem('refreshtoken')
+
+            //     sessionStorage.removeItem('accesstoken')
+            //     sessionStorage.removeItem('refreshtoken')
+            // },
+
             logout: () => {
+
+                // Clear Zustand state
                 set({ staff: null, role: null })
 
-                const expired =
-                    'expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict'
+                // Clear persisted Zustand storage
+                localStorage.removeItem('admin-auth')
 
-                // Clear cookies
-                document.cookie = `user-role=; ${expired}`
-                document.cookie = `accesstoken=; ${expired}`
-                document.cookie = `refreshtoken=; ${expired}`
+                // Clear auth cookies
+                const cookies = [
+                    'user-role',
+                    'accesstoken',
+                    'refreshtoken',
+                ]
 
-                // Optional secure variants
-                document.cookie = `user-role=; ${expired}; Secure`
-                document.cookie = `accesstoken=; ${expired}; Secure`
-                document.cookie = `refreshtoken=; ${expired}; Secure`
+                cookies.forEach((cookie) => {
 
-                // Clear storage if used
-                localStorage.removeItem('accesstoken')
-                localStorage.removeItem('refreshtoken')
+                    // Normal
+                    document.cookie =
+                        `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
 
-                sessionStorage.removeItem('accesstoken')
-                sessionStorage.removeItem('refreshtoken')
+                    // Strict
+                    document.cookie =
+                        `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict`
+
+                    // None + Secure
+                    document.cookie =
+                        `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=None; Secure`
+
+                    // Secure
+                    document.cookie =
+                        `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure`
+                })
+
+                // Optional hard refresh
+                window.location.href = '/login'
             },
 
             isLoggedIn: () => !!get().staff,
