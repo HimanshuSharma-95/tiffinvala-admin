@@ -4,10 +4,24 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { ArrowLeft, Plus, X, ImageIcon, Trash2, Settings2 } from 'lucide-react'
+
+
+// import {
+//     getSingleProduct, updateProduct, updateProductImage,
+//     removeProductImage, getCategories, addCategory, removeCategory
+// } from '@/services/menuService'
+
 import {
-    getSingleProduct, updateProduct, updateProductImage,
-    removeProductImage, getCategories, addCategory, removeCategory
+    getSingleProduct,
+    updateProduct,
+    updateProductImage,
+    removeProductImage,
+    getCategories,
+    addCategory,
+    removeCategory,
+    deleteProduct
 } from '@/services/menuService'
+
 import { Category, Product } from '@/types/menu'
 
 export default function EditItemPage() {
@@ -18,11 +32,12 @@ export default function EditItemPage() {
     const [product, setProduct] = useState<Product | null>(null)
 
     const [categories, setCategories] = useState<Category[]>([])
-
+    const [deleting, setDeleting] = useState(false)
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
     const [uploadingImage, setUploadingImage] = useState(false)
     const [removingImage, setRemovingImage] = useState(false)
+
     const [newImage, setNewImage] = useState<File | null>(null)
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
     const [showCategoryManager, setShowCategoryManager] = useState(false)
@@ -70,6 +85,38 @@ export default function EditItemPage() {
             toast.error('Failed to load product')
         } finally {
             setLoading(false)
+        }
+    }
+
+    const handleDeleteProduct = async () => {
+
+        const confirmed = window.confirm(
+            'Delete this item permanently?'
+        )
+
+        if (!confirmed) return
+
+        setDeleting(true)
+
+        try {
+
+            await deleteProduct(id)
+
+            toast.success('Item deleted!')
+
+            router.push(
+                '/admin/menu-edit/all-items'
+            )
+
+        } catch (error: any) {
+
+            toast.error(
+                error.response?.data?.message ||
+                'Failed to delete item'
+            )
+
+        } finally {
+            setDeleting(false)
         }
     }
 
@@ -460,6 +507,16 @@ export default function EditItemPage() {
                                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                                 : 'bg-[#F97316] text-white'}`}>
                         {saving ? 'Saving...' : 'Save Changes'}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleDeleteProduct}
+                        disabled={deleting}
+                        className="w-full py-3 rounded-xl font-semibold bg-red-50 text-red-500 border border-red-100 hover:bg-red-100 transition-colors disabled:opacity-60"
+                    >
+                        {deleting
+                            ? 'Deleting...'
+                            : 'Delete Item'}
                     </button>
                 </form>
             </div>

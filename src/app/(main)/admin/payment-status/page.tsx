@@ -331,7 +331,7 @@ export default function PaymentStatusPage() {
                                         <span className="font-semibold text-red-400">{report.unpaid}</span>
                                     </div>
 
-                                    <div className="flex items-center justify-between text-sm">
+                                    {/* <div className="flex items-center justify-between text-sm">
                                         <span>Total Amount</span>
                                         <span className="font-semibold">${report.totalAmount}</span>
                                     </div>
@@ -344,6 +344,27 @@ export default function PaymentStatusPage() {
                                     <div className="flex items-center justify-between text-sm">
                                         <span>Remaining</span>
                                         <span className="font-semibold text-[#FF6B00]">${report.remaining}</span>
+                                    </div> */}
+
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span>Total Amount </span>
+                                        <span className="font-semibold">
+                                            ${Number(report.totalAmount).toFixed(4)}
+                                        </span>
+                                    </div>
+
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span>Received</span>
+                                        <span className="font-semibold text-green-500">
+                                            ${Number(report.received).toFixed(4)}
+                                        </span>
+                                    </div>
+
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span>Remaining</span>
+                                        <span className="font-semibold text-[#FF6B00]">
+                                            ${Number(report.remaining).toFixed(4)}
+                                        </span>
                                     </div>
 
                                 </div>
@@ -483,17 +504,18 @@ export default function PaymentStatusPage() {
 
                                 <div className="flex items-center justify-between text-sm">
                                     <span>Total Amount</span>
-                                    <span className="font-semibold">${report.totalAmount}</span>
+
+                                    <span className="font-semibold">${Number(report.totalAmount).toFixed(4)}</span>
                                 </div>
 
                                 <div className="flex items-center justify-between text-sm">
                                     <span>Received</span>
-                                    <span className="font-semibold text-green-500">${report.received}</span>
+                                    <span className="font-semibold text-green-500">${Number(report.received).toFixed(4)}</span>
                                 </div>
 
                                 <div className="flex items-center justify-between text-sm">
                                     <span>Remaining</span>
-                                    <span className="font-semibold text-[#FF6B00]">${report.remaining}</span>
+                                    <span className="font-semibold text-[#FF6B00]">${Number(report.remaining).toFixed(4)}</span>
                                 </div>
 
                             </div>

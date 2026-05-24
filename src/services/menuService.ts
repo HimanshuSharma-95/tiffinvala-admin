@@ -397,3 +397,7 @@ export const removeComboFromArea = async (
 
     return response.data
 }
+
+export const deleteProduct = async (id: string) => {
+    return api.delete(`/products/delete/${id}`)
+}
