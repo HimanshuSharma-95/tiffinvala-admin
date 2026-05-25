@@ -37,6 +37,8 @@ export interface KitchenOrder {
 
 export interface KitchenUserGroup {
     username: string
+    full_name: string,
+    city: string,
     totalOrders: number
     orders: KitchenOrder[]
 }

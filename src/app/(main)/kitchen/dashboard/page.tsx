@@ -16,6 +16,7 @@ import {
     AggregatedItem,
     KitchenOrdersResponse,
 } from '@/types/admin/kitchen'
+import { group } from 'console'
 
 export default function KitchenDashboard() {
     const router = useRouter()
@@ -248,11 +249,39 @@ export default function KitchenDashboard() {
                         </div>
 
                         {/* Order cards */}
-                        <div className="space-y-3">
+                        {/* <div className="space-y-3">
                             {allOrders.map(order => (
-                                <KitchenOrderCard key={order.orderId} order={order} showCustomerDetails={false} />
+                                <KitchenOrderCard 
+                                name={}
+                                city={}
+                                key={order.orderId} 
+                                order={order} 
+                                showCustomerDetails={false} />
                             ))}
-                        </div>
+                        </div> */}
+
+                        {userGroups.map((group, gi) => (
+
+                            <div
+                                key={`${group.username}-${gi}`}
+                                className="space-y-3"
+                            >
+
+                                {group.orders.map((order, oi) => (
+
+                                    <KitchenOrderCard
+                                        key={`${order.orderId}-${oi}`}
+                                        name={group.full_name}
+                                        city={group.city}
+                                        order={order}
+                                        showCustomerDetails={false}
+                                    />
+
+                                ))}
+
+                            </div>
+
+                        ))}
                     </div>
                 </div>
             )}

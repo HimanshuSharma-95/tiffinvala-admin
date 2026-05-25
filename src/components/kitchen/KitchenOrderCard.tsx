@@ -2,16 +2,20 @@
 
 import { useState } from 'react'
 import { Clock3, User, X, MapPin, Phone, Mail, Loader2 } from 'lucide-react'
-import { KitchenOrder, OrderUserDetails } from '@/types/admin/kitchen'
+import { KitchenOrder, KitchenUserGroup, OrderUserDetails } from '@/types/admin/kitchen'
 import { getOrderUserDetails } from '@/services/orderService'
 import { toast } from 'sonner'
 
 interface Props {
+    name: string,
+    city: string,
     order: KitchenOrder
     showCustomerDetails?: boolean
 }
 
 export default function KitchenOrderCard({
+    name,
+    city,
     order,
     showCustomerDetails = true
 }: Props) {
@@ -57,24 +61,46 @@ export default function KitchenOrderCard({
                 {/* HEADER */}
                 <div className="flex items-start justify-between gap-4 mb-3">
 
-                    <div>
+                    <div className="min-w-0">
 
-                        <p className="text-sm font-semibold text-[#1E1E1E]">
-                            {order.username}
+                        {/* NAME */}
+                        <p className="text-sm font-semibold text-[#1E1E1E] truncate">
+
+                            {name}
+
                         </p>
+
+                        {/* USERNAME */}
+                        <p className="text-xs font-semibold text-gray-500 mt-0.5">
+
+                            Username : {order.username}
+
+                        </p>
+
+                        {/* CITY */}
+                        {city && (
+
+                            <p className="text-xs font-semibold text-gray-500 mt-0.5">
+
+                                City : {city}
+
+                            </p>
+
+                        )}
 
                     </div>
 
                     <div className="text-right shrink-0">
 
                         <p className="text-xs text-gray-400 capitalize">
+
                             {order.status}
+
                         </p>
 
                     </div>
 
                 </div>
-
 
 
                 {/* ITEMS */}
