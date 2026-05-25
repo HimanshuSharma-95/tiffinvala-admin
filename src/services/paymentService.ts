@@ -8,7 +8,7 @@ export const getPaymentOrders = async (
 ) => {
 
     const response = await api.get(
-        `/admin/orders/area?page=1&limit=999999&status=confirmed&paymentStatus=${paymentStatus}&area=${area}&startDate=${startDate}&endDate=${endDate}`
+        `/admin/orders/area?page=1&limit=999999&status=confirmed,delivered&paymentStatus=${paymentStatus}&area=${area}&startDate=${startDate}&endDate=${endDate}`
     )
 
     return response.data

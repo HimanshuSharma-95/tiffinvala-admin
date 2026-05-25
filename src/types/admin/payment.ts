@@ -85,7 +85,9 @@ export interface PaymentOrdersResponse {
 export interface PaymentReport {
     title: string
     deliveryCycle: string
+    totalOrders: number
     totalConfirmedOrders: number
+    totalDeliveredOrders: number
     paid: number
     unpaid: number
     totalAmount: number
@@ -95,6 +97,5 @@ export interface PaymentReport {
 
 export interface PaymentHistoryResponse {
     area: string
-
     report: PaymentReport
 }

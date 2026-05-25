@@ -243,7 +243,7 @@ export default function PaymentOrderCard({
 
                                 <p className="font-bold text-[#FF6B00] text-[13px]">
 
-                                    ${order.totalAmount}
+                                    ${Number(order.totalAmount).toFixed(4)}
 
                                 </p>
 
