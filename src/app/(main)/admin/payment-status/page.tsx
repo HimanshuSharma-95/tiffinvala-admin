@@ -493,8 +493,13 @@ export default function PaymentStatusPage() {
                                 </div>
 
                                 <div className="flex items-center justify-between text-sm">
-                                    <span>Total Orders</span>
-                                    <span className="font-semibold">{report.totalConfirmedOrders}</span>
+                                    <span>Total Confirmed Orders</span>
+                                    <span className="font-semibold">{report.totalOrders}</span>
+                                </div>
+
+                                <div className="flex items-center justify-between text-sm">
+                                    <span>Total Delivered Orders</span>
+                                    <span className="font-semibold">{report.totalDeliveredOrders}</span>
                                 </div>
 
                                 <div className="flex items-center justify-between text-sm">
