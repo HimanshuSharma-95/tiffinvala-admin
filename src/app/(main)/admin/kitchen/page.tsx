@@ -502,7 +502,7 @@ export default function AdminKitchenPage() {
                                     <div
                                         key={`${group.username}-${gi}`}
                                     >
-                                        
+
 
                                         {/* USER HEADER */}
                                         <div className="flex items-center gap-2 mb-3 px-1">

@@ -30,6 +30,7 @@ export interface KitchenOrder {
     orderId: string
     username: string
     status: string
+    totalprice:number
     itemCount: number
     items: KitchenOrderItem[]
     placedAt: string

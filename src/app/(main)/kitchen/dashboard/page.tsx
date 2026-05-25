@@ -264,7 +264,7 @@ export default function KitchenDashboard() {
 
                             <div
                                 key={`${group.username}-${gi}`}
-                                className="space-y-3"
+                                className="space-y-3 py-2"
                             >
 
                                 {group.orders.map((order, oi) => (
