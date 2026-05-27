@@ -126,7 +126,7 @@ export default function KitchenOrderCard({
                                         {item.variant?.size &&
                                             item.variant.size !== 'default' && (
 
-                                                <p className="text-[11px] text-gray-400 capitalize">
+                                                <p className="font-semibold text-[#1E1E1E] capitalize">
 
                                                     ({item.variant.size})
 
@@ -169,7 +169,7 @@ export default function KitchenOrderCard({
 
                                                                 <div className="w-1 h-1 rounded-full bg-orange-300 shrink-0" />
 
-                                                                <p className="text-[12px] text-gray-500 truncate">
+                                                                <p className="text-[13px] text-[#1E1E1E] truncate">
 
                                                                     {product.name}
 
@@ -177,7 +177,7 @@ export default function KitchenOrderCard({
 
                                                             </div>
 
-                                                            <span className="text-[11px] text-gray-400 shrink-0">
+                                                            <span className="text-[13px] text-[#1E1E1E] shrink-0">
 
                                                                 × {product.quantity}
 
