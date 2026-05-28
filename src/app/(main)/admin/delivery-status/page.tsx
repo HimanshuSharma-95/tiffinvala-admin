@@ -353,21 +353,20 @@ export default function DriverDeliveryStatusPage() {
                                                 {/* BATCH */}
 
                                                 <div className="flex items-center justify-between gap-3 mb-5">
-
                                                     <div>
-
                                                         <h2 className="text-base font-semibold text-[#1E2A3A]">
-
                                                             Batch
-
                                                         </h2>
 
                                                         <p className="text-sm text-gray-400 mt-1">
-
-                                                            {batch.totalOrders} Orders
-
+                                                            {batch.totalOrders} Orders ·{" "}
+                                                            {new Date(batch.finalizedAt).toLocaleDateString('en-US', {
+                                                                weekday: 'short',
+                                                                month: 'short',
+                                                                day: 'numeric',
+                                                                year: 'numeric',
+                                                            })}
                                                         </p>
-
                                                     </div>
 
                                                     <div className="px-3 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-600 capitalize">
