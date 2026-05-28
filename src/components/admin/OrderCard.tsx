@@ -304,7 +304,7 @@ export default function OrderCard({
                     <div className="text-right shrink-0">
 
                         <p className="font-bold text-[#1E1E1E]">
-                            ${order.totalAmount}
+                            ${order.totalAmount.toFixed(2)}
                         </p>
 
                         <p className="text-xs text-gray-400 capitalize">
@@ -325,7 +325,7 @@ export default function OrderCard({
                     Customer Details
                 </button>
 
-           
+
                 {/* ITEMS */}
                 <div className="space-y-2">
 
@@ -416,7 +416,7 @@ export default function OrderCard({
                     <span>Total</span>
 
                     <span>
-                        ${order.totalAmount}
+                        ${order.totalAmount.toFixed(2)}
                     </span>
 
                 </div>
