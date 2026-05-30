@@ -260,3 +260,32 @@ export const unassignOrderFromBatch = async (
 
     return response.data
 }
+
+
+
+
+
+
+//Live - Offline Orders
+
+// ─────────────────────────────────────────────
+// ORDER ACCEPTANCE
+// ─────────────────────────────────────────────
+
+export const getOrderAcceptanceStatus = async () => {
+
+    const response = await api.get(
+        `/orders/getorderacceptancestatus`
+    )
+
+    return response.data
+}
+
+export const toggleOrderAcceptance = async () => {
+
+    const response = await api.post(
+        `/admin/toggleorderacceptance`
+    )
+
+    return response.data
+}
