@@ -298,6 +298,16 @@ export default function OrderCard({
                         <p className="text-xs text-gray-400 mt-0.5">
                             {order.user.username}
                         </p>
+                        <p className="text-xs text-gray-400 mt-0.5">
+                            {new Date(order.placedAt).toLocaleString("en-IN", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "2-digit",
+                                hour12: true,
+                            })}
+                        </p>
 
                     </div>
 
