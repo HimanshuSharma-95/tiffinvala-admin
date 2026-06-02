@@ -360,12 +360,16 @@ export default function DriverDeliveryStatusPage() {
 
                                                         <p className="text-sm text-gray-400 mt-1">
                                                             {batch.totalOrders} Orders ·{" "}
-                                                            {new Date(batch.finalizedAt).toLocaleDateString('en-US', {
-                                                                weekday: 'short',
-                                                                month: 'short',
-                                                                day: 'numeric',
-                                                                year: 'numeric',
-                                                            })}
+
+                                                            {batch.finalizedAt ?
+                                                                new Date(batch.finalizedAt).toLocaleDateString('en-US', {
+                                                                    weekday: 'short',
+                                                                    month: 'short',
+                                                                    day: 'numeric',
+                                                                    year: 'numeric',
+                                                                })
+                                                                : ""}
+
                                                         </p>
                                                     </div>
 

@@ -1,219 +1,3 @@
-// 'use client'
-
-// import { useState } from 'react'
-
-// import {
-//     Order,
-//     OrderStatus
-// } from '@/types/admin/orders'
-
-// import SubtleSpinner from '@/components/general/SubtleSpinner'
-
-// interface Props {
-//     order: Order
-//     currentStatus: OrderStatus
-//     onConfirm: () => Promise<void> | void
-//     onCancel: () => Promise<void> | void
-// }
-
-// export default function OrderCard({
-//     order,
-//     currentStatus,
-//     onConfirm,
-//     onCancel
-// }: Props) {
-
-//     const [actionLoading, setActionLoading] =
-//         useState<'confirm' | 'cancel' | null>(null)
-
-//     const handleConfirm = async () => {
-//         try {
-//             setActionLoading('confirm')
-
-//             await onConfirm()
-//         } finally {
-//             setActionLoading(null)
-//         }
-//     }
-
-//     const handleCancel = async () => {
-//         try {
-//             setActionLoading('cancel')
-
-//             await onCancel()
-//         } finally {
-//             setActionLoading(null)
-//         }
-//     }
-
-//     return (
-//         <div className="bg-white w-full max-w-xl rounded-3xl p-5 shadow-sm border border-gray-100 mx-auto">
-
-//             {/* HEADER */}
-//             <div className="flex items-start justify-between gap-4 mb-4">
-
-//                 <div className="min-w-0">
-
-//                     <h3 className="font-semibold text-[#1E1E1E] truncate">
-//                         {order.user.name}
-//                     </h3>
-//                     <h3 className="font-semibold text-[#1E1E1E] truncate">
-//                         {order.user.phone}
-//                     </h3>
-
-//                     <p className="text-xs text-gray-400 mt-0.5">
-//                         #{order.orderId.slice(-6)}
-//                     </p>
-
-//                 </div>
-
-//                 <div className="text-right shrink-0">
-
-//                     <p className="font-bold text-[#1E1E1E]">
-//                         ${order.totalAmount}
-//                     </p>
-
-//                     <p className="text-xs text-gray-400 capitalize">
-//                         {order.payment.status}
-//                     </p>
-
-//                 </div>
-
-//             </div>
-
-//             {/* ITEMS */}
-//             <div className="space-y-2">
-
-//                 {order.items.map(item => (
-
-//                     <div
-//                         key={item.productId}
-//                         className="flex items-center justify-between gap-3 text-sm"
-//                     >
-
-//                         <span className="text-[#1E1E1E] truncate">
-//                             {item.name}
-//                         </span>
-
-//                         <span className="text-gray-500 shrink-0">
-//                             × {item.quantity}
-//                         </span>
-
-//                     </div>
-
-//                 ))}
-
-//             </div>
-
-//             {/* TOTAL */}
-//             <div className="border-t border-gray-100 mt-4 pt-4 flex items-center justify-between font-semibold text-[#1E1E1E]">
-
-//                 <span>Total</span>
-
-//                 <span>
-//                     ${order.totalAmount}
-//                 </span>
-
-//             </div>
-
-//             {/* ACTIONS */}
-//             {/* ACTIONS */}
-//             <div className="mt-5">
-
-//                 {currentStatus === 'pending' && (
-
-//                     <div className="grid grid-cols-2 gap-2">
-
-//                         {/* CONFIRM */}
-//                         <button
-//                             onClick={handleConfirm}
-//                             disabled={actionLoading !== null}
-//                             className="bg-[#FF6B00] text-white h-10 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-2"
-//                         >
-
-//                             {actionLoading === 'confirm' && (
-//                                 <SubtleSpinner size={13} />
-//                             )}
-
-//                             <span>
-//                                 Confirm
-//                             </span>
-
-//                         </button>
-
-//                         {/* CANCEL */}
-//                         <button
-//                             onClick={handleCancel}
-//                             disabled={actionLoading !== null}
-//                             className="border border-[#FF6B00] text-[#FF6B00] h-10 rounded-xl font-medium hover:bg-orange-50 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-//                         >
-
-//                             {actionLoading === 'cancel' && (
-//                                 <SubtleSpinner size={13} />
-//                             )}
-
-//                             <span>
-//                                 Cancel
-//                             </span>
-
-//                         </button>
-
-//                     </div>
-
-//                 )}
-
-//                 {currentStatus === 'confirmed' && (
-
-//                     <button
-//                         onClick={handleCancel}
-//                         disabled={actionLoading !== null}
-//                         className="w-full border border-red-300 text-red-500 h-10 rounded-xl font-medium hover:bg-red-50 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-//                     >
-
-//                         {actionLoading === 'cancel' && (
-//                             <SubtleSpinner size={13} />
-//                         )}
-
-//                         <span>
-//                             Cancel Order
-//                         </span>
-
-//                     </button>
-
-//                 )}
-
-//                 {currentStatus === 'cancelled' && (
-
-//                     <button
-//                         onClick={handleConfirm}
-//                         disabled={actionLoading !== null}
-//                         className="w-full bg-[#FF6B00] text-white h-10 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-2"
-//                     >
-
-//                         {actionLoading === 'confirm' && (
-//                             <SubtleSpinner size={13} />
-//                         )}
-
-//                         <span>
-//                             Confirm Order
-//                         </span>
-
-//                     </button>
-
-//                 )}
-
-//             </div>
-
-//         </div>
-//     )
-// }
-
-
-
-
-
-
-
 'use client'
 
 import { useState } from 'react'
@@ -235,14 +19,25 @@ interface Props {
     currentStatus: OrderStatus
     onConfirm: () => Promise<void> | void
     onCancel: () => Promise<void> | void
+    onDelete?: () => Promise<void> | void
 }
 
 export default function OrderCard({
     order,
     currentStatus,
     onConfirm,
-    onCancel
+    onCancel,
+    onDelete
 }: Props) {
+
+    const [showDeleteConfirm, setShowDeleteConfirm] =
+        useState(false)
+
+    const [deleteLoading, setDeleteLoading] =
+        useState(false)
+
+    const [isDeleting, setIsDeleting] =
+        useState(false)
 
     const [actionLoading, setActionLoading] =
         useState<'confirm' | 'cancel' | null>(null)
@@ -275,6 +70,25 @@ export default function OrderCard({
         } finally {
 
             setActionLoading(null)
+        }
+    }
+
+
+    const handleDelete = async () => {
+
+        if (!onDelete) return
+
+        try {
+
+            setDeleteLoading(true)
+
+            await onDelete()
+
+            setIsDeleting(true)
+
+        } finally {
+
+            setDeleteLoading(false)
         }
     }
 
@@ -498,21 +312,53 @@ export default function OrderCard({
 
                     {currentStatus === 'cancelled' && (
 
-                        <button
-                            onClick={handleConfirm}
-                            disabled={actionLoading !== null}
-                            className="w-full bg-[#FF6B00] text-white h-10 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-2"
-                        >
+                        <div className="grid grid-cols-2 gap-2">
 
-                            {actionLoading === 'confirm' && (
-                                <SubtleSpinner size={13} />
-                            )}
+                            <button
+                                onClick={handleConfirm}
+                                disabled={
+                                    actionLoading !== null ||
+                                    deleteLoading
+                                }
+                                className="bg-[#FF6B00] text-white h-10 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-2"
+                            >
 
-                            <span>
-                                Confirm Order
-                            </span>
+                                {actionLoading === 'confirm' && (
+                                    <SubtleSpinner size={13} />
+                                )}
 
-                        </button>
+                                <span>
+                                    Confirm Order
+                                </span>
+
+                            </button>
+
+                            <button
+                                onClick={() => {
+
+                                    if (
+                                        window.confirm(
+                                            'Are you sure you want to delete this order?'
+                                        )
+                                    ) {
+                                        handleDelete()
+                                    }
+                                }}
+                                disabled={deleteLoading}
+                                className="border border-red-300 text-red-500 h-10 rounded-xl font-medium hover:bg-red-50 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                            >
+
+                                {deleteLoading && (
+                                    <SubtleSpinner size={13} />
+                                )}
+
+                                <span>
+                                    Delete
+                                </span>
+
+                            </button>
+
+                        </div>
 
                     )}
 

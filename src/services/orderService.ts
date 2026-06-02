@@ -265,7 +265,6 @@ export const unassignOrderFromBatch = async (
 
 
 
-
 //Live - Offline Orders
 
 // ─────────────────────────────────────────────
@@ -285,6 +284,20 @@ export const toggleOrderAcceptance = async () => {
 
     const response = await api.post(
         `/admin/toggleorderacceptance`
+    )
+
+    return response.data
+}
+
+
+
+
+
+//order deletion
+
+export const deleteOrder = async (orderId: string) => {
+    const response = await api.delete(
+        `/admin/deleteorder/${orderId}`
     )
 
     return response.data

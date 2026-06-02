@@ -21,7 +21,8 @@ import SubtleSpinner from '@/components/general/SubtleSpinner'
 
 import {
     getOrdersByArea,
-    updateOrderStatus
+    updateOrderStatus,
+    deleteOrder
 } from '@/services/orderService'
 
 import {
@@ -175,6 +176,45 @@ export default function OrdersPage() {
         }
     }
 
+
+    const handleDeleteOrder = async (
+        orderId: string
+    ) => {
+
+        try {
+
+            const response =
+                await deleteOrder(orderId)
+
+            if (response?.success) {
+
+                setOrders(prev =>
+                    prev.filter(
+                        o => o.orderId !== orderId
+                    )
+                )
+
+                toast.success(
+                    'Order deleted successfully'
+                )
+
+            } else {
+
+                toast.error(
+                    'Failed to delete order'
+                )
+
+            }
+
+        } catch {
+
+            toast.error(
+                'Failed to delete order'
+            )
+
+        }
+    }
+
     return (
         <div className="min-h-screen bg-[#FAFAFA]">
 
@@ -317,6 +357,9 @@ export default function OrdersPage() {
                                                         order.orderId,
                                                         'cancelled'
                                                     )
+                                                }
+                                                onDelete={() =>
+                                                    handleDeleteOrder(order.orderId)
                                                 }
                                             />
 

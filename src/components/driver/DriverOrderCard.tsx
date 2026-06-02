@@ -57,9 +57,22 @@ export default function DriverOrderCard({
                     </p>
 
                     <p className="text-xs text-gray-500 mt-3 line-clamp-2 leading-relaxed">
-
                         {order.deliveryDetails.addressLine1}
-
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0 line-clamp-2 leading-relaxed">
+                        {order.deliveryDetails.addressLine2}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0 line-clamp-2 leading-relaxed">
+                        {order.deliveryDetails.city}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0 line-clamp-2 leading-relaxed">
+                        {order.deliveryDetails.state}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0 line-clamp-2 leading-relaxed">
+                        {order.deliveryDetails.zipCode}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0 line-clamp-2 leading-relaxed">
+                        {order.deliveryDetails.country}
                     </p>
 
                     <div className="flex items-center gap-2 mt-3 flex-wrap">
