@@ -793,7 +793,7 @@ function SortableOrderCard({
                         >
 
                             <GripVertical
-                                size={15}
+                                size={30}
                                 className="text-gray-400"
                             />
 
