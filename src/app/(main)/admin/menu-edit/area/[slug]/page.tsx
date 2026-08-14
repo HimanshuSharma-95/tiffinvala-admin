@@ -433,7 +433,7 @@ function AreaProductCard({
           alt={product.name}
           className="w-full h-full object-cover"
           onError={(e) => {
-            (e.target as HTMLImageElement).src = "/images/defFoodImage.png";
+            (e.target as HTMLImageElement).src = "/defaultfood.png";
           }}
         />
       </div>
