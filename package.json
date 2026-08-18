@@ -16,6 +16,7 @@
     "@react-google-maps/api": "^2.20.8",
     "axios": "^1.14.0",
     "framer-motion": "^12.38.0",
+    "heic2any": "^0.0.4",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "lucide-react": "^1.14.0",
